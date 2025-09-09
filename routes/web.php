@@ -3,12 +3,32 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TareaController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ArchivoController;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 */
+
+// ...ruta de la vista de Análisis...
+Route::get('/archivos', function () {
+    return view('archivos');
+});
+
+Route::post('/archivos/subir', [ArchivoController::class, 'subir'])->name('archivos.subir');
+Route::get('/archivos/descargar/{archivo}', [ArchivoController::class, 'descargar'])->name('archivos.descargar');
+Route::delete('/archivos/eliminar/{archivo}', [ArchivoController::class, 'eliminar'])->name('archivos.eliminar');
+
+// ...ruta de la vista de Análisis...
+Route::get('/analisis', function () {
+    return view('analisis');
+});
+
+// ...ruta de POO...
+Route::get('/poo', function () {
+    return view('poo');
+});
 
 // Ruta principal
 Route::get('/', function () {
