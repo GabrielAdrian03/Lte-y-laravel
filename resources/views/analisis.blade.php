@@ -7,7 +7,6 @@
     </div>
     <div class="card-body">
         <p>Bienvenido a la página de Analisis II Baby.</p>
-        <!-- Aquí puedes agregar más contenido -->
     </div>
 </div>
 @endsection
