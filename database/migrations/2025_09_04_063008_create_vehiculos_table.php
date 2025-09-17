@@ -14,13 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('vehiculos', function (Blueprint $table) {
-            $patente->string('patente');
-            $modelo->string('modelo');
-            $marca->string('marca');
-            $fabricante->string('fabricante');
-            $fecha->date('date');
-            $estado->string('estado');
-            $neumaticos->string('neumaticos');
+            //$patente->string('patente');
+            //$modelo->string('modelo');
+            //$marca->string('marca');
+            //$fabricante->string('fabricante');
+            //$fecha->date('date');
+            //$estado->string('estado');
+            //$neumaticos->string('neumaticos');
             $table->id();
             $table->timestamps();
         });

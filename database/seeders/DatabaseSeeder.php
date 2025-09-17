@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Database\Seeders\TareaSeeder; // ✅ Importa desde el namespace correcto
+use Database\Seeders\TareaSeeder;
 
 class DatabaseSeeder extends Seeder
 {

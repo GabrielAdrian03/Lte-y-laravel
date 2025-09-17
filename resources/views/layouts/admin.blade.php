@@ -45,31 +45,22 @@
         <a href="{{ url('/tareas') }}" class="nav-link">Home</a>
       </li>
     </ul>
-
+    
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-      <!-- Navbar Search -->
-      <li class="nav-item">
-        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-          <i class="fas fa-search"></i>
-        </a>
-        <div class="navbar-search-block">
-          <form class="form-inline">
-            <div class="input-group input-group-sm">
-              <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-              <div class="input-group-append">
-                <button class="btn btn-navbar" type="submit">
-                  <i class="fas fa-search"></i>
-                </button>
-                <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                  <i class="fas fa-times"></i>
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
+      <!-- Boton de cerrar sesion -->
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" style="
+              background-color: #f44336;
+              color: white;
+              border: none;
+              padding: 10px 20px;
+              cursor: pointer;
+              border-radius: 5px;
+              ">Cerrar Sesión</button>
+        </form>
       </li>
-
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
@@ -155,6 +146,7 @@
           <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
         </div>
       </li>
+      <!-- full screen -->
       <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
           <i class="fas fa-expand-arrows-alt"></i>
@@ -173,7 +165,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{ url('/tareas') }}" class="nav-link active">
-      <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-5" style="opacity: 0.8">
       <span class="brand-text font-weight-light">Grupo 1</span>
     </a>
 
@@ -210,7 +202,7 @@
             <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                Materias
+                Secciones
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -219,7 +211,7 @@
               <li class="nav-item">
                 <a href="{{ url('/poo') }}" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>POO</p>
+                  <p>Administrador de Empleados</p>
                 </a>
               </li>
 
@@ -227,7 +219,7 @@
 
                 <a href="{{url('/analisis')}}" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Análisis II</p>
+                  <p>Gestión de Empleados</p>
                 </a>
               </li>
 
@@ -261,27 +253,11 @@
     <br>
     <!-- Main content -->
     <section class="content">
-      <div class="container-fluid"> 
-          
-
-
-         
+      <div class="container-fluid">  
                   @yield('content')	
-
-     
-      
       </div>
       </section>
        <!-- /.content-wrapper -->
-
-
-
-
-
-
-
-
-
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
       <!-- Control sidebar content goes here -->
@@ -324,5 +300,7 @@
 <script src="{{asset('dist/js/demo.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{asset('dist/js/pages/dashboard.js')}}"></script>
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

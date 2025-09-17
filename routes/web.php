@@ -4,12 +4,40 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TareaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ArchivoController;
+use App\Http\Controllers\EmpleadoController;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\VacationController;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 */
+
+// ...ruta para la vista de análisis...;
+Route::get('analisis', [EmpleadoController::class, 'tareasAsignadas'])->name('analisis');
+
+// ...ruta para la vista de vacaciones...;
+Route::middleware(['auth'])->group(function () {
+    Route::get('/vacaciones', [VacationController::class, 'index'])->name('vacaciones.index');
+    Route::post('/vacaciones', [VacationController::class, 'store'])->name('vacaciones.store');
+});
+
+// ...ruta para cerrar sesión...;
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/login');
+})->name('logout');
+
+// ...ruta para asignar tareas a empleados...;
+Route::post('empleados/{id}/asignar-tareas', [EmpleadoController::class, 'asignarTareas'])->name('empleados.asignarTareas');
+
+// ...ruta de la vista de Empleados...;
+Route::get('empleados', [EmpleadoController::class, 'index'])->name('empleados.index');
+
+// ...ruta de la vista de Empleados...
+Route::get('empleados/create', [EmpleadoController::class, 'create'])->name('empleados.create');
+Route::post('empleados', [EmpleadoController::class, 'store'])->name('empleados.store');
 
 // ...ruta de la vista de Análisis...
 Route::get('/archivos', function () {
@@ -21,9 +49,9 @@ Route::get('/archivos/descargar/{archivo}', [ArchivoController::class, 'descarga
 Route::delete('/archivos/eliminar/{archivo}', [ArchivoController::class, 'eliminar'])->name('archivos.eliminar');
 
 // ...ruta de la vista de Análisis...
-Route::get('/analisis', function () {
-    return view('analisis');
-});
+//Route::get('/analisis', function () {
+//    return view('analisis');
+//});
 
 // ...ruta de POO...
 Route::get('/poo', function () {

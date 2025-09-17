@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('modelos', function (Blueprint $table) {
-            $nombreModelo->string('nombreModelo');
-            $anioModelo->date('anioModelo');
+            //$nombreModelo->string('nombreModelo');
+            //$anioModelo->date('anioModelo');
             $table->id();
             $table->timestamps();
         });
