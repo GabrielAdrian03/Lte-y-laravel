@@ -7,12 +7,28 @@ use App\Http\Controllers\ArchivoController;
 use App\Http\Controllers\EmpleadoController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\VacationController;
-
+use App\Http\Controllers\VehiculoController;
+use App\Http\Controllers\DescripcionVehiculoController;
+use App\Http\Controllers\FalloVehiculoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 */
+
+// ...ruta para descargar informe en PDF...
+Route::get('informe/descargar', [ArchivoController::class, 'descargarInforme'])->name('informe.descargar');
+
+// ...ruta para guardar fallo vehicular...
+Route::post('vehiculos/{vehiculo}/fallo', [FalloVehiculoController::class, 'store'])->name('fallo.store');
+
+// ...ruta para la vista de descripción del vehículo...;
+Route::get('vehiculos/{vehiculo}/descripcion', [DescripcionVehiculoController::class, 'create'])->name('vehiculos.descripcion.create');
+Route::post('vehiculos/{vehiculo}/descripcion', [DescripcionVehiculoController::class, 'store'])->name('vehiculos.descripcion.store');
+
+// ...ruta para la vista de vehículos...;
+Route::get('vehiculos/create', [VehiculoController::class, 'create'])->name('vehiculos.create');
+Route::post('vehiculos', [VehiculoController::class, 'store'])->name('vehiculos.store');
 
 // ...ruta para la vista de análisis...;
 Route::get('analisis', [EmpleadoController::class, 'tareasAsignadas'])->name('analisis');

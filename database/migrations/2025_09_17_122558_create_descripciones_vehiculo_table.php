@@ -13,16 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vehiculos', function (Blueprint $table) {
+            Schema::create('descripciones_vehiculo', function (Blueprint $table) {
             $table->id();
-            $table->string('patente')->unique();
-            $table->string('modelo');
-            $table->date('fecha_vtv');
-            $table->string('estado');
-            $table->date('fecha_cambio_neumaticos');
-            $table->integer('cantidad_puertas');
-            $table->integer('anio');
+            $table->unsignedBigInteger('vehiculo_id');
+            $table->string('estado_general');
+            $table->text('piezas_daniadas');
+            $table->decimal('precio_servicio', 10, 2);
             $table->timestamps();
+
+            $table->foreign('vehiculo_id')->references('id')->on('vehiculos')->onDelete('cascade');
         });
     }
 
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vehiculos');
+        Schema::dropIfExists('descripciones_vehiculo');
     }
 };

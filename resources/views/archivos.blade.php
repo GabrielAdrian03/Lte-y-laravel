@@ -3,11 +3,7 @@
 @section('content')
 <div class="container">
     <h2>Subir archivo</h2>
-    <h2></h2>
-    
-
     <hr>
-
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
@@ -29,5 +25,16 @@
         </li>
     @endforeach
     </ul>
+</div>
+<!-- Descarga del informe -->
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Informe Administrativo</h3>
+    </div>
+    <div class="card-body">
+        <p>Empleados</p>
+        <a href="{{ route('informe.descargar') }}" class="btn btn-info">
+            Descargar Informe
+    </div>
 </div>
 @endsection

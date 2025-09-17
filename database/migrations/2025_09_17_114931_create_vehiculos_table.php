@@ -15,13 +15,6 @@ return new class extends Migration
     {
         Schema::create('vehiculos', function (Blueprint $table) {
             $table->id();
-            $table->string('patente')->unique();
-            $table->string('modelo');
-            $table->date('fecha_vtv');
-            $table->string('estado');
-            $table->date('fecha_cambio_neumaticos');
-            $table->integer('cantidad_puertas');
-            $table->integer('anio');
             $table->timestamps();
         });
     }

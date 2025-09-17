@@ -211,7 +211,7 @@
               <li class="nav-item">
                 <a href="{{ url('/poo') }}" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Administrador de Empleados</p>
+                  <p>Apartado del jefe</p>
                 </a>
               </li>
 
@@ -219,7 +219,7 @@
 
                 <a href="{{url('/analisis')}}" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Gestión de Empleados</p>
+                  <p>Apartado del Empleado</p>
                 </a>
               </li>
 
