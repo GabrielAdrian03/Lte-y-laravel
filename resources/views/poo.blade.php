@@ -10,9 +10,6 @@
         <a href="{{ route('empleados.create') }}" class="btn btn-success">
             Registrar Empleado
         </a>
-        <a href="{{ route('empleados.index') }}" class="btn btn-primary ms-2">
-            Asignar Tareas a Empleados
-        </a>
     </div>
 </div>
 <!-- Segunda tarjeta para vehiculos -->

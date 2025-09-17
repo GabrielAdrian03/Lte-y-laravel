@@ -12,6 +12,16 @@
 </div>
 <div class="card">
     <div class="card-header">
+        <h3 class="card-title">Seccion de asignacion de tareas</h3>
+    </div>
+    <div class="card-body">
+        <a href="{{ route('empleados.index') }}" class="btn btn-primary ms-2">
+            Asignar Tareas a Empleados
+        </a>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header">
         <h3 class="card-title">Tareas asignadas al personal</h3>
     </div>
     <div class="card-body">

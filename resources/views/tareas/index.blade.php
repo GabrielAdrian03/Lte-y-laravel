@@ -5,7 +5,7 @@
         <div class = "col-md-12">
             <div class = "card">
                 <div class = "card-header d-flex justify-content-between align-items-left">
-                    <span>{{__('Dashboard') }}</span>
+                    <span>{{__('Tablero de Tareas') }}</span>
                     <a href="{{ route('tareas.create') }}" class="btn btn-primary btn-sm">Crear Tarea</a>
                 </div>
                 <div class = "card-body">
