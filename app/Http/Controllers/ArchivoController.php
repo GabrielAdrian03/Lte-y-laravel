@@ -11,13 +11,13 @@ class ArchivoController extends Controller
 {
 // ...funcion para descargar informe en PDF...
         public function descargarInforme()
-    {
-        $empleados = Empleados::all();
-        $vehiculos = Vehiculo::all();
+            {
+                $empleados = Empleados::all();
+                $vehiculos = Vehiculo::all();
 
-        $pdf = Pdf::loadView('informes.admin', compact('empleados', 'vehiculos'));
-        return $pdf->download('informe_administrativo.pdf');
-    }
+                $pdf = Pdf::loadView('informes.admin', compact('empleados', 'vehiculos'));
+                return $pdf->download('informe_administrativo.pdf');
+            }
 
 // ...funcion para borrar el archivo...
 public function eliminar($archivo)

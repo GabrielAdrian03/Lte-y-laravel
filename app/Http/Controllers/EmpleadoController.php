@@ -11,7 +11,7 @@ class EmpleadoController extends Controller
 
     public function tareasAsignadas()
     {
-        $empleados = \App\Models\empleados::with('tareas')->get();
+        $empleados = \App\Models\Empleados::with('tareas')->get();
         return view('analisis', compact('empleados'));
     }
     public function asignarTareas(Request $request, $id)
