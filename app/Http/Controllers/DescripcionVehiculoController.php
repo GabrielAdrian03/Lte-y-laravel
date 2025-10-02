@@ -29,6 +29,6 @@ class DescripcionVehiculoController extends Controller
             'precio_servicio' => $request->precio_servicio,
         ]);
 
-        return redirect()->route('vehiculos.descripcion.create', $vehiculo_id)->with('success', 'Descripción registrada correctamente.');
+        return redirect()->route('tareas.index', $vehiculo_id)->with('success', 'Descripción registrada correctamente.');
     }
 }

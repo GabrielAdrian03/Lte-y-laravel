@@ -11,10 +11,10 @@
                     <form action="{{ route('tareas.store') }}" method="POST"> 
                         @csrf 
                         <div class="form-group"> 
-                            <label for="nombre">Nombre</label> 
+                            <label for="nombre">Nombre de la tarea</label> 
                             <input type="text" class="form-control" id="nombre" name="nombre" required> 
                         </div> 
-                        <button type="submit" class="btn btn-primary">Crear Tarea</button> 
+                        <button type="submit" class="btn btn-primary">Crear Nueva Tarea</button> 
                     </form> 
                 </div> 
             </div> 

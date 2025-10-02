@@ -47,6 +47,6 @@ class EmpleadoController extends Controller
 
         Empleados::create($request->all());
 
-        return redirect()->route('empleados.create')->with('success', 'Empleado registrado exitosamente.');
+        return redirect()->route('tareas.index')->with('success', 'Empleado registrado exitosamente.');
     }
 }
