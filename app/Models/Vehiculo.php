@@ -12,11 +12,22 @@ class Vehiculo extends Model
 
     protected $fillable = [
         'patente',
-        'modelo',
+        'marca_id',
+        'modelo_id',
         'fecha_vtv',
         'estado',
         'fecha_cambio_neumaticos',
         'cantidad_puertas',
         'anio',
     ];
+
+    public function marca()
+    {
+        return $this->belongsTo(Marca::class);
+    }
+
+    public function modelo()
+    {
+        return $this->belongsTo(Modelo::class);
+    }
 }

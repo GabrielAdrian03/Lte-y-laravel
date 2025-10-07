@@ -10,5 +10,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(TareaSeeder::class);
-    }
+        $this->call(RoleSeeder::class);
+        $this->call(MarcaSeeder::class);
+}
 }

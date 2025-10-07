@@ -4,19 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Vehiculo;
+use App\Models\Modelo;
+use App\controllers\modeloController;
 
 class VehiculoController extends Controller
 {
     public function create()
     {
-        return view('vehiculos.create');
+        $modelo = Modelo::all();
+        $marcas = \App\Models\Marca::all();
+        return view('vehiculos.create', compact('marcas'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'patente' => 'required|string|max:20|unique:vehiculos,patente',
-            'modelo' => 'required|string|max:255',
+            'marca_id' => 'required|string|max:255',
+            'modelo_id' => 'required|string|max:255',
             'fecha_vtv' => 'required|date',
             'estado' => 'required|string|max:50',
             'fecha_cambio_neumaticos' => 'required|date',
@@ -28,4 +33,5 @@ class VehiculoController extends Controller
 
         return redirect()->route('tareas.index')->with('success', 'Vehículo registrado correctamente.');
     }
+    
 }

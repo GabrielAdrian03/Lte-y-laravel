@@ -10,11 +10,15 @@ use App\Http\Controllers\VacationController;
 use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\DescripcionVehiculoController;
 use App\Http\Controllers\FalloVehiculoController;
+use App\Http\Controllers\ModeloController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 */
+
+// ...ruta para obtener modelos según la marca seleccionada...
+Route::get('/get-modelos/{marca_id}', [ModeloController::class, 'getModelos']);
 
 // ...ruta para descargar informe en PDF...
 Route::get('informe/descargar', [ArchivoController::class, 'descargarInforme'])->name('informe.descargar');
@@ -64,10 +68,7 @@ Route::post('/archivos/subir', [ArchivoController::class, 'subir'])->name('archi
 Route::get('/archivos/descargar/{archivo}', [ArchivoController::class, 'descargar'])->name('archivos.descargar');
 Route::delete('/archivos/eliminar/{archivo}', [ArchivoController::class, 'eliminar'])->name('archivos.eliminar');
 
-// ...ruta de la vista de Análisis...
-//Route::get('/analisis', function () {
-//    return view('analisis');
-//});
+Route::resource('vehiculos', VehiculoController::class);
 
 // ...ruta de POO...
 Route::get('/poo', function () {
@@ -86,9 +87,31 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 // Tareas
-Route::get('/tareas', [TareaController::class, 'index'])->name('tareas.index');
-Route::get('/tareas/create', [TareaController::class, 'create'])->name('tareas.create');
-Route::post('/tareas', [TareaController::class, 'store'])->name('tareas.store');
-Route::get('/tareas/{tarea}/edit', [TareaController::class, 'edit'])->name('tareas.edit');
-Route::put('/tareas/{tarea}', [TareaController::class, 'update'])->name('tareas.update');
-Route::delete('/tareas/{tarea}', [TareaController::class, 'destroy'])->name('tareas.destroy');
+Route::get('/tareas', [TareaController::class, 'index'])
+->name('tareas.index')
+->middleware(['permission:ver tareas']);
+
+//crear tarea
+Route::get('/tareas/create', [TareaController::class, 'create'])
+->name('tareas.create')
+->middleware(['permission:crear tareas']);
+
+//guardar tarea
+Route::post('/tareas', [TareaController::class, 'store'])
+->name('tareas.store')
+->middleware(['permission:crear tareas']);
+
+//editar tarea
+Route::get('/tareas/{tarea}/edit', [TareaController::class, 'edit'])
+->name('tareas.edit')
+->middleware(['permission:editar tareas']);
+
+//actualizar tarea
+Route::put('/tareas/{tarea}', [TareaController::class, 'update'])
+->name('tareas.update')
+->middleware(['permission:editar tareas']);
+
+//borrar tarea
+Route::delete('/tareas/{tarea}', [TareaController::class, 'destroy'])
+->name('tareas.destroy')
+->middleware(['permission:eliminar tareas']);

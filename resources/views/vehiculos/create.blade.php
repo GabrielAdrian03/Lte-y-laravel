@@ -13,21 +13,38 @@
             <div class="alert alert-danger">
                 <ul>
                     @foreach ($errors->all() as $error)
-                        <li>Patente ya registrado.</li>
+                        <li>{{ $error }}</li>
                     @endforeach
                 </ul>
             </div>
         @endif
+
         <form action="{{ route('vehiculos.store') }}" method="POST">
             @csrf
             <div class="mb-3">
                 <label for="patente" class="form-label">Patente</label>
                 <input type="text" class="form-control" id="patente" name="patente" required>
             </div>
+
+            <!-- MARCA -->
             <div class="mb-3">
-                <label for="modelo" class="form-label">Modelo</label>
-                <input type="text" class="form-control" id="modelo" name="modelo" required>
+                <label for="marca_id" class="form-label">Marca</label>
+                <select class="form-control" id="marca_id" name="marca_id" required>
+                    <option value="">Seleccione una marca</option>
+                    @foreach($marcas as $marca)
+                        <option value="{{ $marca->id }}">{{ $marca->nombre }}</option>
+                    @endforeach
+                </select>
             </div>
+
+            <!-- MODELO -->
+            <div class="mb-3">
+                <label for="modelo_id" class="form-label">Modelo</label>
+                <select class="form-control" id="modelo_id" name="modelo_id" required>
+                    <option value="">Seleccione un modelo</option>
+                </select>
+            </div>
+
             <div class="mb-3">
                 <label for="fecha_vtv" class="form-label">Fecha VTV</label>
                 <input type="date" class="form-control" id="fecha_vtv" name="fecha_vtv" required>
@@ -48,8 +65,37 @@
                 <label for="anio" class="form-label">Año</label>
                 <input type="number" class="form-control" id="anio" name="anio" min="1900" max="{{ date('Y') }}" required>
             </div>
+
             <button type="submit" class="btn btn-primary">Registrar</button>
         </form>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function () {
+    $('#marca_id').on('change', function () {
+        var marcaId = $(this).val();
+        $('#modelo_id').empty().append('<option value="">Cargando...</option>');
+        
+        if (marcaId) {
+            $.ajax({
+                url: '/get-modelos/' + marcaId,
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    $('#modelo_id').empty().append('<option value="">Seleccione un modelo</option>');
+                    $.each(data, function (key, modelo) {
+                        $('#modelo_id').append('<option value="' + modelo.id + '">' + modelo.nombre + '</option>');
+                    });
+                }
+            });
+        } else {
+            $('#modelo_id').empty().append('<option value="">Seleccione una marca primero</option>');
+        }
+    });
+});
+</script>
 @endsection

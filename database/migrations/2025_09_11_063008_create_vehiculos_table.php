@@ -15,8 +15,19 @@ return new class extends Migration
     {
         Schema::create('vehiculos', function (Blueprint $table) {
             $table->id();
+            
             $table->string('patente')->unique();
-            $table->string('modelo');
+            
+            $table->foreignId('marcas_id')->constrained('marcas')->onDelete('cascade');
+            $table->foreignId('modelos_id')->constrained('modelos')->onDelete('cascade');
+
+
+            //$table->unsignedBigInteger('marcas_id');
+            //$table->unsignedBigInteger('modelos_id');
+
+            //$table->foreign('marcas_id')->references('id')->on('marcas')->onDelete('cascade');
+            //$table->foreign('modelos_id')->references('id')->on('modelos')->onDelete('cascade');
+
             $table->date('fecha_vtv');
             $table->string('estado');
             $table->date('fecha_cambio_neumaticos');
