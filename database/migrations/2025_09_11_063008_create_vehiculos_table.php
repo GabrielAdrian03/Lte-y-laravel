@@ -6,25 +6,17 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
+
+    public function up(): void
     {
         Schema::create('vehiculos', function (Blueprint $table) {
             $table->id();
-            
             $table->string('patente')->unique();
-            
-            $table->foreignId('marcas_id')->constrained('marcas')->onDelete('cascade');
-            $table->foreignId('modelos_id')->constrained('modelos')->onDelete('cascade');
-
+            $table->foreignId('marca_id')->constrained('marcas')->onDelete('cascade');
+            $table->foreignId('modelo_id')->constrained('modelos')->onDelete('cascade');
 
             //$table->unsignedBigInteger('marcas_id');
             //$table->unsignedBigInteger('modelos_id');
-
             //$table->foreign('marcas_id')->references('id')->on('marcas')->onDelete('cascade');
             //$table->foreign('modelos_id')->references('id')->on('modelos')->onDelete('cascade');
 

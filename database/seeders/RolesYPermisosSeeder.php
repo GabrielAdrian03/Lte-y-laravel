@@ -44,7 +44,7 @@ class RolesYPermisosSeeder extends Seeder
         $rolSupervisor = Role::firstOrCreate(['name' => 'supervisor']);
 
         // 3️⃣ Asignar permisos a roles
-        $rolAdmin->syncPermissions($permisos); // Admin tiene todo
+        $rolAdmin->syncPermissions($permisos); // Admin tiene todos
 
         $rolSupervisor->syncPermissions([
             'ver tareas',
@@ -59,21 +59,30 @@ class RolesYPermisosSeeder extends Seeder
             'ver vacaciones',
         ]);
 
-        // 4️⃣ Asignar roles a usuarios específicos por email
+        // 4️⃣ Crear usuarios y asignar roles
         $usuarios = [
-            'admin@tudominio.com' => 'admin',
-            'asd@hotmail.com' => 'admin',     // 🔹 tu usuario admin real
-            'empleado@tudominio.com' => 'empleado',
-            'supervisor@tudominio.com' => 'supervisor',
+            'admin@tudominio.com' => ['name' => 'Administrador', 'rol' => 'admin', 'password' => '123456'],
+            'asd@hotmail.com' => ['name' => 'Otro Admin', 'rol' => 'admin', 'password' => '123456'],
+            'empleado@tudominio.com' => ['name' => 'Empleado', 'rol' => 'empleado', 'password' => '123456'],
+            'supervisor@tudominio.com' => ['name' => 'Supervisor', 'rol' => 'supervisor', 'password' => '123456'],
         ];
 
-        foreach ($usuarios as $email => $rol) {
-            $user = User::where('email', $email)->first();
-            if ($user && !$user->hasRole($rol)) {
-                $user->assignRole($rol);
+        foreach ($usuarios as $email => $info) {
+            // Crear el usuario si no existe
+            $user = User::firstOrCreate(
+                ['email' => $email],
+                ['name' => $info['name'], 'password' => bcrypt($info['password'])]
+            );
+
+            // Asignar rol, evita duplicados
+            if (!$user->hasRole($info['rol'])) {
+                $user->assignRole($info['rol']);
             }
         }
 
-        $this->command->info('✅ Roles y permisos creados y asignados correctamente.');
+        // 5️⃣ Limpiar cache de Spatie
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+
+        $this->command->info('✅ Roles, permisos y usuarios creados correctamente.');
     }
 }

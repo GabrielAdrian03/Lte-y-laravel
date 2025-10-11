@@ -17,8 +17,10 @@ use App\Http\Controllers\ModeloController;
 |--------------------------------------------------------------------------
 */
 
+
+
 // ...ruta para obtener modelos según la marca seleccionada...
-Route::get('/get-modelos/{marca_id}', [ModeloController::class, 'getModelos']);
+Route::get('modelos-por-marca/{marca_id}', [App\Http\Controllers\ModeloController::class, 'getModelos']);
 
 // ...ruta para descargar informe en PDF...
 Route::get('informe/descargar', [ArchivoController::class, 'descargarInforme'])->name('informe.descargar');

@@ -22,12 +22,20 @@ class Vehiculo extends Model
     ];
 
     public function marca()
-    {
-        return $this->belongsTo(Marca::class);
-    }
+{
+    // Relación a través del modelo (modelo tiene marca_id)
+    return $this->hasOneThrough(
+        \App\Models\Marca::class,   // Modelo final (marca)
+        \App\Models\Modelos::class,  // Modelo intermedio
+        'id',                        // Clave local en modelos (id del modelo)
+        'id',                        // Clave local en marcas (id de la marca)
+        'modelo_id',                 // Clave en vehiculos que apunta al modelo
+        'marca_id'                   // Clave en modelos que apunta a la marca
+    );
+}
 
     public function modelo()
     {
-        return $this->belongsTo(Modelo::class);
+        return $this->belongsTo(Modelos::class, 'modelo_id');
     }
 }
