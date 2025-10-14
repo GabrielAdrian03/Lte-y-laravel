@@ -32,7 +32,7 @@
         <h3 class="card-title">Informe Administrativo</h3>
     </div>
     <div class="card-body">
-        <p>Empleados</p>
+
         <a href="{{ route('informe.descargar') }}" class="btn btn-info">
             Descargar Informe
     </div>

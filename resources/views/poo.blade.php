@@ -3,7 +3,7 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Seccion del Personal</h3>
+        <h3 class="card-title">Sección del Personal</h3>
     </div>
     <div class="card-body">
         <p>Empleados</p>
@@ -12,17 +12,69 @@
         </a>
     </div>
 </div>
-<!-- Segunda tarjeta para vehiculos -->
-<div class="card">
+
+<!-- Segunda tarjeta para vehículos -->
+<div class="card mt-4">
     <div class="card-header">
         <h3 class="card-title">Sección Vehicular</h3>
     </div>
     <div class="card-body">
-        <p>Vehiculos</p>
-        <a href="{{ route('vehiculos.create') }}" class="btn btn-success">
-            Registrar Vehiculo
+        <p>Vehículos</p>
+
+        <a href="{{ route('vehiculos.create') }}" class="btn btn-success mb-3">
+            Registrar Vehículo
         </a>
-        <!-- Tabla de vehículos registrados -->
+
+        <!-- 🔹 FILTRO DE VEHÍCULOS -->
+        <div class="container mt-3">
+            <form action="{{ route('poo') }}" method="GET" autocomplete="on" role="search">
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
+                        <label for="modelo_id">Modelo</label>
+                        <select name="modelo_id" id="modelo_id" class="form-control">
+                            <option value="">-- Todos los modelos --</option>
+                            @foreach($modelos as $modelo)
+                                <option value="{{ $modelo->id }}" {{ request('modelo_id') == $modelo->id ? 'selected' : '' }}>
+                                    {{ $modelo->nombreModelo ?? $modelo->nombre }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
+                        <label for="desde">Fecha Desde</label>
+                        <input 
+                            type="date" 
+                            name="desde" 
+                            id="desde" 
+                            class="form-control" 
+                            value="{{ request('desde') }}">
+                    </div>
+
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
+                        <label for="hasta">Fecha Hasta</label>
+                        <input 
+                            type="date" 
+                            name="hasta" 
+                            id="hasta" 
+                            class="form-control" 
+                            value="{{ request('hasta') }}">
+                    </div>
+
+                    <div class="col-lg-3 col-md-12 col-sm-12 mb-3 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary mr-2">
+                            <i class="fas fa-filter"></i> Filtrar
+                        </button>
+                        <a href="{{ route('poo') }}" class="btn btn-secondary">
+                            <i class="fas fa-eraser"></i> Limpiar
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- 🔹 FIN DEL FILTRO -->
+
+        <!-- TABLA DE VEHÍCULOS -->
         <table class="table mt-4">
             <thead>
                 <tr>
@@ -37,7 +89,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach(\App\Models\Vehiculo::with(['marca', 'modelo'])->get() as $vehiculo)
+                @forelse($vehiculos as $vehiculo)
                     <tr>
                         <td>{{ $vehiculo->patente }}</td>
                         <td>{{ $vehiculo->marca->nombre ?? 'Sin marca' }}</td>
@@ -70,7 +122,11 @@
                             </form>
                         </td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="8" class="text-center text-muted">No hay vehículos registrados.</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
 

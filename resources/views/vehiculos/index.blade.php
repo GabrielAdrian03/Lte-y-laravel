@@ -27,4 +27,11 @@
         </tbody>
     </table>
 </div>
+<div class="card-body">
+    @include('vehiculos.busqueda')
+    @if (session('success'))
+        <div class="alert alert-success" role="alert">
+            {{ session('success') }}
+        </div>
+    @endif
 @endsection
