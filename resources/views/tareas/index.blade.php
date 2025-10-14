@@ -1,54 +1,82 @@
 @extends('layouts.admin')
+
 @section('content')
-<div class = "container">
-    <div class = "row justify-content-center">
-        <div class = "col-md-12">
-            <div class = "card">
-                <div class = "card-header d-flex justify-content-between align-items-left">
-                    <span>{{__('Tablero de Tareas') }}</span>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">📋 Tablero de Tareas</h5>
+                    {{-- 🔹 Crear tarea (solo visible si el usuario tiene permiso) --}}
                     @can('crear tareas')
-                    <a href="{{ route('tareas.create') }}" class="btn btn-primary btn-sm">Crear Tarea</a>
+                        <a href="{{ route('tareas.create') }}" class="btn btn-light btn-sm">
+                            <i class="fas fa-plus-circle"></i> Nueva Tarea
+                        </a>
                     @endcan
                 </div>
-                <div class = "card-body">
+
+                <div class="card-body">
+                    {{-- 🔹 Mensaje de éxito --}}
                     @if (session('success'))
-                        <div class = "alert alert-success" role = "alert">
-                            {{session('success') }}
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                         </div>
                     @endif
-                    <table class = "table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($tareas as $tarea)
+
+                    {{-- 🔹 Tabla de tareas --}}
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
                                 <tr>
-                                    <td>{{ $tarea->id }}</td>
-                                    <td>{{ $tarea->nombre }}</td>
-                                    <td>
-                                        @can('editar tareas')
-                                        <a href="{{ route('tareas.edit', $tarea->id) }}" class="btn btn-warning btn-sm">Editar</a>
-                                        @endcan
-                                        @can('eliminar tareas')
-                                        <form action="{{ route('tareas.destroy', $tarea->id) }}" method="POST" style="display:inline-block;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Estas seguro de eliminar esta tarea?')">
-                                                Eliminar
-                                            </button>   
-                                        </form>
-                                        @endcan     
-                                    </td>                                    
+                                    <th scope="col">#ID</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col" class="text-center">Acciones</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div> 
-            </div>
+                            </thead>
+                            <tbody>
+                                @forelse ($tareas as $tarea)
+                                    <tr>
+                                        <td>{{ $tarea->id }}</td>
+                                        <td>{{ $tarea->nombre }}</td>
+                                        <td class="text-center">
+                                            {{-- 🔹 Botón editar --}}
+                                            @can('editar tareas')
+                                                <a href="{{ route('tareas.edit', $tarea->id) }}" class="btn btn-warning btn-sm">
+                                                    <i class="fas fa-edit"></i> Editar
+                                                </a>
+                                            @endcan
+
+                                            {{-- 🔹 Botón eliminar --}}
+                                            @can('eliminar tareas')
+                                                <form action="{{ route('tareas.destroy', $tarea->id) }}" 
+                                                      method="POST" 
+                                                      style="display:inline-block;"
+                                                      onsubmit="return confirm('¿Estás seguro de eliminar esta tarea?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm">
+                                                        <i class="fas fa-trash-alt"></i> Eliminar
+                                                    </button>
+                                                </form>
+                                            @endcan
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="3" class="text-center text-muted">
+                                            No hay tareas registradas actualmente.
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div> {{-- card-body --}}
+            </div> {{-- card --}}
         </div>
-    </div>        
+    </div>
 </div>
 @endsection

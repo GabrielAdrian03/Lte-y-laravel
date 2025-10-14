@@ -63,11 +63,11 @@
     </div>
     <div class="card-body">
         <p>Vehículos</p>
-
+        @can('crear vehiculos')
         <a href="{{ route('vehiculos.create') }}" class="btn btn-success mb-3">
             Registrar Vehículo
         </a>
-
+        @endcan
         <!-- 🔹 FILTRO DE VEHÍCULOS -->
         <div class="container mt-3">
             <form action="{{ route('poo') }}" method="GET" autocomplete="on" role="search">

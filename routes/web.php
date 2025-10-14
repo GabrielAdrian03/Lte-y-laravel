@@ -97,8 +97,7 @@ Route::get('/archivos', function () {
 // 🧰 MÓDULO TAREAS
 //
 Route::get('/tareas', [TareaController::class, 'index'])
-    ->name('tareas.index')
-    ->middleware(['permission:ver tareas']);
+    ->name('tareas.index');
 
 Route::get('/tareas/create', [TareaController::class, 'create'])
     ->name('tareas.create')
