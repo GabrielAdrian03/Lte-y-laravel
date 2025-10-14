@@ -6,7 +6,7 @@
             <div class = "card">
                 <div class = "card-header d-flex justify-content-between align-items-left">
                     <span>{{__('Tablero de Tareas') }}</span>
-                    @can('crear-tareas')
+                    @can('crear tareas')
                     <a href="{{ route('tareas.create') }}" class="btn btn-primary btn-sm">Crear Tarea</a>
                     @endcan
                 </div>
@@ -29,10 +29,10 @@
                                     <td>{{ $tarea->id }}</td>
                                     <td>{{ $tarea->nombre }}</td>
                                     <td>
-                                        @can('editar-tareas')
+                                        @can('editar tareas')
                                         <a href="{{ route('tareas.edit', $tarea->id) }}" class="btn btn-warning btn-sm">Editar</a>
                                         @endcan
-                                        @can('borrar-tareas')
+                                        @can('eliminar tareas')
                                         <form action="{{ route('tareas.destroy', $tarea->id) }}" method="POST" style="display:inline-block;">
                                             @csrf
                                             @method('DELETE')

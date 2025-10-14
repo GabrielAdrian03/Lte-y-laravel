@@ -61,10 +61,16 @@ Route::get('informe/descargar', [ArchivoController::class, 'descargarInforme'])
 // 👥 MÓDULO EMPLEADOS
 //
 Route::get('empleados', [EmpleadoController::class, 'index'])->name('empleados.index');
-Route::get('empleados/create', [EmpleadoController::class, 'create'])->name('empleados.create');
+//Route::get('empleados/create', [EmpleadoController::class, 'create'])->name('empleados.create');
 Route::post('empleados', [EmpleadoController::class, 'store'])->name('empleados.store');
 Route::post('empleados/{id}/asignar-tareas', [EmpleadoController::class, 'asignarTareas'])
     ->name('empleados.asignarTareas');
+// Empleados CRUD
+Route::get('/empleados/create', [EmpleadoController::class, 'create'])->name('empleados.create')->middleware('permission:crear empleados');
+Route::get('/empleados/{id}/edit', [EmpleadoController::class, 'edit'])->name('empleados.edit')->middleware('permission:editar empleados');
+Route::put('/empleados/{id}', [EmpleadoController::class, 'update'])->name('empleados.update')->middleware('permission:editar empleados');
+Route::delete('/empleados/{id}', [EmpleadoController::class, 'destroy'])->name('empleados.destroy')->middleware('permission:borrar empleados');
+
 
 //
 // 🗓️ MÓDULO VACACIONES

@@ -56,4 +56,29 @@ class EmpleadoController extends Controller
 
         return redirect()->route('poo')->with('success', 'Empleado registrado exitosamente.');
     }
+    // Actualizar un empleado
+    public function update(Request $request, $id)
+    {
+        $empleado = Empleados::findOrFail($id);
+        
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'apellido' => 'required|string|max:255',
+            'dni' => 'required|string|max:20|unique:empleados,dni,' . $empleado->id,
+            'email' => 'required|email|unique:empleados,email,' . $empleado->id,
+        ]);
+
+        $empleado->update($request->all());
+
+        return redirect()->route('poo')->with('success', 'Empleado actualizado correctamente.');
+    }
+
+    // Eliminar empleado
+    public function destroy($id)
+    {
+        $empleado = Empleados::findOrFail($id);
+        $empleado->delete();
+
+        return redirect()->route('poo')->with('success', 'Empleado eliminado correctamente.');
+    }
 }

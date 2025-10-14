@@ -6,13 +6,56 @@
         <h3 class="card-title">Sección del Personal</h3>
     </div>
     <div class="card-body">
-        <p>Empleados</p>
-        <a href="{{ route('empleados.create') }}" class="btn btn-success">
-            Registrar Empleado
+    <p>Empleados</p>
+    @can('crear empleados')
+        <a href="{{ route('empleados.create') }}" class="btn btn-success mb-3">
+            Registrar Nuevo Empleado
         </a>
-    </div>
-</div>
+    @endcan
 
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Empleado</th>
+                <th>DNI</th>
+                <th>Tareas Asignadas</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($empleados as $empleado)
+                <tr>
+                    <td>{{ $empleado->nombre }} {{ $empleado->apellido }}</td>
+                    <td>{{ $empleado->dni }}</td>
+                    <td>
+                        @forelse($empleado->tareas as $tarea)
+                            <span class="badge bg-info">{{ $tarea->nombre }}</span>
+                        @empty
+                            <span class="text-muted">Sin tareas asignadas</span>
+                        @endforelse
+                    </td>
+                    <td>
+                        @can('editar empleados')
+                            <a href="{{ route('empleados.edit', $empleado->id) }}" class="btn btn-warning btn-sm">
+                                Editar
+                            </a>
+                        @endcan
+                        @can('eliminar empleados')
+                            <form action="{{ route('empleados.destroy', $empleado->id) }}" method="POST" style="display:inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este empleado?')">
+                                    Eliminar
+                                </button>
+                            </form>
+                        @endcan
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+</div>
 <!-- Segunda tarjeta para vehículos -->
 <div class="card mt-4">
     <div class="card-header">
