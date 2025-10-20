@@ -11,7 +11,9 @@ use App\Http\Controllers\{
     VehiculoController,
     DescripcionVehiculoController,
     FalloVehiculoController,
-    ModeloController
+    ModeloController,
+    AdminController,
+    DashboardController
 };
 
 /*
@@ -22,19 +24,29 @@ use App\Http\Controllers\{
 |--------------------------------------------------------------------------
 */
 
-//
-// 🧩 RUTA PRINCIPAL Y AUTENTICACIÓN
-//
+// Ruta para la vista principal del módulo POO
+Route::get('/poo', [DashboardController::class, 'index'])->name('poo');
+
+
+// Ruta para el dashboard de administración
+Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+
+
+// rutas para el módulo de clientes
+use App\Http\Controllers\ClienteController;
+
+// rutas para el módulo de clientes
+Route::resource('clientes', ClienteController::class)->only(['index', 'create', 'store']);
+
+//RUTA PRINCIPAL Y AUTENTICACIÓN
 Route::get('/', fn() => view('welcome'));
 Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-//
-// 🚗 MÓDULO VEHICULAR (Vehículos, Fallos, Descripciones)
-//
+// MÓDULO VEHICULAR (Vehículos, Fallos, Descripciones)
 
 // Página principal del módulo (usa el controlador)
-Route::get('/poo', [VehiculoController::class, 'index'])->name('poo');
+//Route::get('/poo', [VehiculoController::class, 'index'])->name('poo');
 
 // CRUD de vehículos
 Route::resource('vehiculos', VehiculoController::class);
@@ -90,9 +102,9 @@ Route::get('/archivos', [ArchivoController::class, 'index'])->name('archivos.ind
 Route::post('/archivos/subir', [ArchivoController::class, 'subir'])->name('archivos.subir');
 Route::get('/archivos/descargar/{archivo}', [ArchivoController::class, 'descargar'])->name('archivos.descargar');
 Route::delete('/archivos/eliminar/{archivo}', [ArchivoController::class, 'eliminar'])->name('archivos.eliminar');
-Route::get('/archivos', function () {
-    return view('archivos');
-})->name('archivos.index');
+//Route::get('/archivos', function () {
+//    return view('archivos');
+//})->name('archivos.index');
 //
 // 🧰 MÓDULO TAREAS
 //

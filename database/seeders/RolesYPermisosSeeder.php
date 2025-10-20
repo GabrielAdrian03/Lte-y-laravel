@@ -32,6 +32,15 @@ class RolesYPermisosSeeder extends Seeder
             // Vehículos
             'ver vehiculos',
             'gestionar vehiculos',
+            'crear vehiculos',
+            'editar vehiculos',
+            'eliminar vehiculos',
+
+            //Clientes
+            'ver clientes',
+            'crear clientes',
+            'editar clientes',
+            'eliminar clientes',
         ];
 
         foreach ($permisos as $permiso) {

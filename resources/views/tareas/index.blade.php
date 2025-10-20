@@ -10,7 +10,7 @@
                     <h5 class="mb-0">📋 Tablero de Tareas</h5>
                     {{-- 🔹 Crear tarea (solo visible si el usuario tiene permiso) --}}
                     @can('crear tareas')
-                        <a href="{{ route('tareas.create') }}" class="btn btn-light btn-sm">
+                        <a href="{{ route('tareas.create') }}" class="btn btn-success mb-3">
                             <i class="fas fa-plus-circle"></i> Nueva Tarea
                         </a>
                     @endcan
