@@ -11,7 +11,10 @@ class EmpleadoController extends Controller
     // Mostrar análisis de tareas asignadas a empleados
     public function tareasAsignadas()
     {
-        $empleados = \App\Models\Empleados::with('tareas')->get();
+        $empleados = \App\Models\Empleados::with(['tareas', 'vehiculo', 'cliente'])
+        ->whereHas('tareas') // solo empleados con tareas asignadas
+        ->get();
+
         return view('analisis', compact('empleados'));
     }
 
@@ -27,9 +30,13 @@ class EmpleadoController extends Controller
     // Mostrar lista de empleados
     public function index()
     {
-        $empleados = \App\Models\empleados::with('tareas')->get();
+        $empleados = \App\Models\Empleados::with('tareas', 'vehiculos', 'clientes')->get();
         $tareas = \App\Models\Tarea::all();
-        return view('empleados.index', compact('empleados', 'tareas'));
+        $vehiculos = \App\Models\Vehiculo::with('marca', 'modelo')->get();
+        $clientes = \App\Models\Cliente::all();
+
+        return view('empleados.index', compact('empleados', 'tareas', 'vehiculos', 'clientes'));
+
     }
 
     // Mostrar formulario para crear un nuevo empleado
@@ -81,4 +88,44 @@ class EmpleadoController extends Controller
 
         return redirect()->route('poo')->with('success', 'Empleado eliminado correctamente.');
     }
+    // Asignar tareas, vehículo y cliente en un solo formulario
+    public function asignarTodo(Request $request, $id)
+    {
+        $empleado = Empleados::findOrFail($id);
+
+        // 1️⃣ Asignar tareas
+        $empleado->tareas()->sync($request->tareas ?? []);
+
+        // 2️⃣ Asignar vehículo
+        if ($request->vehiculo_id) {
+            // Marcar vehículo anterior como disponible si cambia
+            if ($empleado->vehiculo_id && $empleado->vehiculo_id != $request->vehiculo_id) {
+                $vehiculoAnterior = \App\Models\Vehiculo::find($empleado->vehiculo_id);
+                if ($vehiculoAnterior) {
+                    $vehiculoAnterior->en_uso = false;
+                    $vehiculoAnterior->save();
+                }
+            }
+
+            $empleado->vehiculo_id = $request->vehiculo_id;
+
+            // Marcar nuevo vehículo como en uso
+            $vehiculoNuevo = \App\Models\Vehiculo::find($request->vehiculo_id);
+            if ($vehiculoNuevo) {
+                $vehiculoNuevo->en_uso = true;
+                $vehiculoNuevo->save();
+            }
+        } else {
+            $empleado->vehiculo_id = null;
+        }
+
+        // 3️⃣ Asignar cliente
+        $empleado->cliente_id = $request->cliente_id ?? null;
+
+        // Guardar cambios
+        $empleado->save();
+
+        return redirect()->route('analisis')->with('success', 'El empleado está de camino.');
+    }
+
 }

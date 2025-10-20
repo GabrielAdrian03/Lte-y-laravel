@@ -38,4 +38,10 @@ class Vehiculo extends Model
     {
         return $this->belongsTo(Modelos::class, 'modelo_id');
     }
+    public function empleado()
+    {
+        return $this->belongsTo(Empleados::class, 'empleado_id');
+    }
+
+
 }

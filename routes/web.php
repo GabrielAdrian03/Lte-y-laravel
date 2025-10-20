@@ -24,6 +24,9 @@ use App\Http\Controllers\{
 |--------------------------------------------------------------------------
 */
 
+// Ruta para asignar todas las tareas a un empleado
+Route::post('/empleados/{id}/asignar-todo', [EmpleadoController::class, 'asignarTodo'])->name('empleados.asignarTodo');
+
 // Ruta para la vista principal del módulo POO
 Route::get('/poo', [DashboardController::class, 'index'])->name('poo');
 
