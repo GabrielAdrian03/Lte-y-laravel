@@ -13,7 +13,8 @@ use App\Http\Controllers\{
     FalloVehiculoController,
     ModeloController,
     AdminController,
-    DashboardController
+    DashboardController,
+    InformeController
 };
 
 /*
@@ -23,6 +24,11 @@ use App\Http\Controllers\{
 | Todas las rutas web del sistema. Limpio y sin duplicados.
 |--------------------------------------------------------------------------
 */
+
+// Ruta para descargar informe CSV nuevo de empleados
+//Route::get('informe/descargar', 
+//[InformeController::class, 'descargar'])
+//->name('informe.descargar');
 
 // Ruta para asignar todas las tareas a un empleado
 Route::post('/empleados/{id}/asignar-todo', [EmpleadoController::class, 'asignarTodo'])->name('empleados.asignarTodo');
@@ -69,7 +75,8 @@ Route::get('modelos-por-marca/{marca_id}', [ModeloController::class, 'getModelos
     ->name('modelos.por.marca');
 
 // Descargar informe PDF
-Route::get('informe/descargar', [ArchivoController::class, 'descargarInforme'])
+Route::get('informe/descargar', 
+[ArchivoController::class, 'descargarInforme'])
     ->name('informe.descargar');
 
 //

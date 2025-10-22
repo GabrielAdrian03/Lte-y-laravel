@@ -26,15 +26,30 @@
     @endforeach
     </ul>
 </div>
+<!-- ...existing code... -->
 <!-- Descarga del informe -->
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">Informe Administrativo</h3>
     </div>
     <div class="card-body">
+        <!-- Formulario GET para filtrar por fecha antes de descargar -->
+        <form action="{{ route('informe.descargar') }}" method="GET" class="form-inline">
+            <div class="form-group mr-2">
+                <label for="desde" class="mr-1">Desde</label>
+                <input type="date" name="desde" id="desde" class="form-control" value="{{ request('desde') }}">
+            </div>
 
-        <a href="{{ route('informe.descargar') }}" class="btn btn-info">
-            Descargar Informe
+            <div class="form-group mr-2">
+                <label for="hasta" class="mr-1">Hasta</label>
+                <input type="date" name="hasta" id="hasta" class="form-control" value="{{ request('hasta') }}">
+            </div>
+
+            <button type="submit" class="btn btn-info">Descargar Informe</button>
+        </form>
+
+        <p class="small mt-2 text-muted">Dejar vacío si desea descargar el informe desde el principio.</p>
     </div>
 </div>
+<!-- ...existing code... -->
 @endsection
