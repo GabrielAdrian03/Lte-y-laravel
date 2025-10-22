@@ -115,7 +115,7 @@
         <p>Vehículos</p>
         @can('crear vehiculos')
             <a href="{{ route('vehiculos.create') }}" class="btn btn-success mb-3">
-                Registrar Vehículo
+                Registrar Nuevo Vehículo
             </a>
         @endcan
 

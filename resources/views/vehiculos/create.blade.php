@@ -26,6 +26,8 @@
                     <input type="text" class="form-control" id="patente" name="patente" required> 
                 </div> 
                 <!-- MARCA --> 
+                 <label for="marca" class="form-label">Marca
+                        </label>
                  <select class="form-control" id="marca_id" name="marca_id" required> 
                     <option value="">Seleccione una marca</option> 
                     @foreach($marcas as $marca) 
@@ -33,6 +35,8 @@
                     </option> @endforeach 
                 </select> 
                 <!-- MODELO --> 
+                 <label for="modelo" class="form-label">Modelo
+                        </label>
                  <select class="form-control" id="modelo_id" name="modelo_id" required> 
                     <option value="">Seleccione un modelo
                     </option> 
