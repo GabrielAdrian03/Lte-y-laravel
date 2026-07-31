@@ -21,10 +21,19 @@ class EmpleadoController extends Controller
     // Asignar tareas a un empleado
     public function asignarTareas(Request $request, $id)
     {
-        $empleado = \App\Models\empleados::findOrFail($id);
+        $empleado = \App\Models\Empleados::findOrFail($id);
+
+        $request->validate([
+            'tareas' => 'array|max:5',
+            'tareas.*' => 'integer|exists:tareas,id',
+        ], [
+            'tareas.max' => 'Solo se pueden asignar hasta 5 tareas por empleado.',
+        ]);
+
         $empleado->tareas()->sync($request->tareas ?? []);
+
         return redirect()->route('analisis')
-        ->with('success', 'Tareas asignadas correctamente.');
+            ->with('success', 'Tareas asignadas correctamente.');
     }
 
     // Mostrar lista de empleados
@@ -92,6 +101,15 @@ class EmpleadoController extends Controller
     public function asignarTodo(Request $request, $id)
     {
         $empleado = Empleados::findOrFail($id);
+
+        $request->validate([
+            'tareas' => 'array|max:5',
+            'tareas.*' => 'integer|exists:tareas,id',
+            'vehiculo_id' => 'nullable|integer|exists:vehiculos,id',
+            'cliente_id' => 'nullable|integer|exists:clientes,id',
+        ], [
+            'tareas.max' => 'Solo se pueden asignar hasta 5 tareas por empleado.',
+        ]);
 
         // 1️⃣ Asignar tareas
         $empleado->tareas()->sync($request->tareas ?? []);

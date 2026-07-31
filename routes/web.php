@@ -41,10 +41,10 @@ Route::get('/poo', [DashboardController::class, 'index'])->name('poo');
 Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
 
-// rutas para el módulo de clientes
+// rutas para el módulo de clientes (este sirve para crear clientes y ver la lista de clientes)
 use App\Http\Controllers\ClienteController;
 
-// rutas para el módulo de clientes
+// rutas para el módulo de clientes (este sirve para crear clientes y ver la lista de clientes)
 Route::resource('clientes', ClienteController::class)->only(['index', 'create', 'store']);
 
 //RUTA PRINCIPAL Y AUTENTICACIÓN
@@ -80,7 +80,7 @@ Route::get('informe/descargar',
     ->name('informe.descargar');
 
 //
-// 👥 MÓDULO EMPLEADOS
+//MÓDULO DE EMPLEADOS
 //
 Route::get('empleados', [EmpleadoController::class, 'index'])->name('empleados.index');
 //Route::get('empleados/create', [EmpleadoController::class, 'create'])->name('empleados.create');
@@ -95,7 +95,7 @@ Route::delete('/empleados/{id}', [EmpleadoController::class, 'destroy'])->name('
 
 
 //
-// 🗓️ MÓDULO VACACIONES
+//MÓDULO DE VACACIONES
 //
 Route::middleware(['auth'])->group(function () {
     Route::get('/vacaciones', [VacationController::class, 'index'])->name('vacaciones.index');
@@ -106,7 +106,7 @@ Route::middleware(['auth'])->group(function () {
 Route::get('analisis', [EmpleadoController::class, 'tareasAsignadas'])->name('analisis');
 
 //
-// 📁 MÓDULO ARCHIVOS
+//MÓDULO DE ARCHIVOS SUBIDOS
 //
 Route::get('/archivos', [ArchivoController::class, 'index'])->name('archivos.index');
 Route::post('/archivos/subir', [ArchivoController::class, 'subir'])->name('archivos.subir');
@@ -116,7 +116,7 @@ Route::delete('/archivos/eliminar/{archivo}', [ArchivoController::class, 'elimin
 //    return view('archivos');
 //})->name('archivos.index');
 //
-// 🧰 MÓDULO TAREAS
+//MÓDULO DE TAREAS
 //
 Route::get('/tareas', [TareaController::class, 'index'])
     ->name('tareas.index');
@@ -142,7 +142,7 @@ Route::delete('/tareas/{tarea}', [TareaController::class, 'destroy'])
     ->middleware(['permission:eliminar tareas']);
 
 //
-// 🚪 CERRAR SESIÓN
+//CERRAR SESIÓN
 //
 Route::post('/logout', function () {
     Auth::logout();

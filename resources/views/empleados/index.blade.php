@@ -82,6 +82,10 @@
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
+        @if($errors->has('tareas'))
+            <div class="alert alert-danger">{{ $errors->first('tareas') }}</div>
+        @endif
+
         <table class="table table-bordered table-custom">
             <thead>
                 <tr>
@@ -111,13 +115,16 @@
                         @csrf
 
                         <td>
-                            @foreach($tareas as $tarea)
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="tareas[]" value="{{ $tarea->id }}"
-                                        {{ $empleado->tareas->contains($tarea->id) ? 'checked' : '' }}>
-                                    <label class="form-check-label">{{ $tarea->nombre }}</label>
-                                </div>
-                            @endforeach
+                            <div class="task-checkboxes" data-employee-id="{{ $empleado->id }}">
+                                @foreach($tareas as $tarea)
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="tareas[]" value="{{ $tarea->id }}"
+                                            {{ $empleado->tareas->contains($tarea->id) ? 'checked' : '' }}>
+                                        <label class="form-check-label">{{ $tarea->nombre }}</label>
+                                    </div>
+                                @endforeach
+                            </div>
+                            <div class="task-pool-info text-muted small mt-2">Tareas seleccionadas: <span class="task-count">0</span> / 5</div>
                         </td>
 
                         <td>
@@ -154,4 +161,32 @@
         </table>
     </div>
 </div>
+
+@section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const taskBlocks = document.querySelectorAll('.task-checkboxes');
+
+        taskBlocks.forEach(function (block) {
+            const taskCount = block.parentElement.querySelector('.task-count');
+            const checkboxes = block.querySelectorAll('input[type="checkbox"]');
+
+            const updateCount = function () {
+                const checked = Array.from(checkboxes).filter(function (checkbox) {
+                    return checkbox.checked;
+                }).length;
+                taskCount.textContent = checked;
+                checkboxes.forEach(function (checkbox) {
+                    checkbox.disabled = checked >= 5 && !checkbox.checked;
+                });
+            };
+
+            checkboxes.forEach(function (checkbox) {
+                checkbox.addEventListener('change', updateCount);
+            });
+
+            updateCount();
+        });
+    });
+</script>
 @endsection

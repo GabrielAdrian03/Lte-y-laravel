@@ -188,56 +188,29 @@
         </div>
       </div>
 
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-          <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Secciones
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
+     <!-- Sidebar Menu -->
+<nav class="mt-2">
+  <div class="d-grid gap-1 px-3">
+    <!-- Botón 1: Apartado del jefe (Persona con traje) -->
+    <a href="{{ url('/poo') }}" class="btn btn-light text-dark text-start w-100 mb-2 border-0">
+      <i class="fas fa-user-tie me-2"></i>
+      Apartado del jefe
+    </a>
 
-              <li class="nav-item">
-                <a href="{{ url('/poo') }}" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Apartado del jefe</p>
-                </a>
-              </li>
+    <!-- Botón 2: Apartado del Empleado (Persona con casco) -->
+    <a href="{{ url('/analisis') }}" class="btn btn-light text-dark text-start w-100 mb-2 border-0">
+      <i class="fas fa-hard-hat me-2"></i>
+      Apartado del Empleado
+    </a>
 
-              <li class="nav-item">
+    <!-- Botón 3: Archivos (Hoja de papel) -->
+    <a href="{{ url('/archivos') }}" class="btn btn-light text-dark text-start w-100 mb-2 border-0">
+      <i class="fas fa-file-alt me-2"></i>
+      Archivos
+    </a>
+  </div>
+</nav>
 
-                <a href="{{url('/analisis')}}" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Apartado del Empleado</p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="{{url('/archivos')}}" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Archivos</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-
-
-          <li class="nav-item">
-            <a href="https://adminlte.io/docs/3.1/" class="nav-link">
-              <i class="nav-icon fas fa-file"></i>
-              <p>Documentación del Plugin</p>
-            </a>
-          </li>
-          
-          
-        </ul>
-      </nav>
       <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
@@ -289,5 +262,6 @@
 <script src="{{asset('dist/js/pages/dashboard.js')}}"></script>
 <!-- SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@yield('scripts')
 </body>
 </html>
